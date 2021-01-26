@@ -7,11 +7,15 @@ const topLevelQuestion = [
     { type: "list",
     name: "options",
     message: "what would you like to do?",
-    choices: ["order", "list", "cancel", "exit"]}
+    choices: ["order", "choose", "list", "cancel", "exit"]}
 ]
 
 const addQuestion = [
     {type: "input", name:"add", message:"what would you like to order?"}
+]
+const coffeQuestion = [
+    {type: "list", name:"options", message: "Which coffe would you like to get?",
+    choices: ["latte", "cappucino", "americano", "espresso", "mocha"]}
 ]
 const removeQuestion = [
     {type: "input", name:"cancel", message:"what would you like to cancel?"}
@@ -28,7 +32,13 @@ const app = async() => {
         addOrder(answer.add)
         console.log("Adding a coffe order...")
         app();
-    } else if (answers.options == "list") {
+    } else if (answers.options == "choose") {
+        const answer = await inquirer.prompt(coffeQuestion)
+        console.log(`Adding a coffe order... enjoy our ${answer.options}!`)
+        addOrder(answer.options)
+        app();
+    } 
+    else if (answers.options == "list") {
         listOrders()
         console.log("listing coffer orders...")
         app();
