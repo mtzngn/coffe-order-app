@@ -22,7 +22,7 @@ const removeQuestion = [
 ]
 
 const main = () => {
-    console.log(chalk.green(figlet.textSync("Coffe Order App", {font:'big'})));
+    console.log(chalk.blue(figlet.textSync("Coffe Order App", {font:'big'})));
     app()
 }
 const app = async() => {
