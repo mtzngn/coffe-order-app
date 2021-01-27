@@ -5,7 +5,7 @@ const {Order} = require("../src/models/Order")
 
 
 const addOrder = (customername,myOrder) => {
-    const order = new Order({customer: customername, coffee: myOrder, milk: false})
+    const order = new Order({customer: customername, coffee: myOrder})
     order.save()
     
 }
@@ -20,16 +20,12 @@ const loadOrders = () =>{
     }
 };
 
-const saveOrders = allOrders => {
-    const ordersJson = JSON.stringify(allOrders);
-    fs.writeFileSync("src/orders.json", ordersJson);
-}
 
-const listOrders = () => {
-    const allOrders = loadOrders();
-    allOrders.map((order,i) =>{
-        console.log(chalk.red(`${i + 1}. ${order.order}\n`));
-    });
+const listOrders = async  () => {
+    const orders = await Order.find({});
+    orders.map((order) => {
+        console.log(`\n${order.customer} is having ${order.coffee}`)
+    })
 };
 
 
@@ -42,7 +38,6 @@ const removeOrder = orderToDelete => {
     } catch (error) {
         console.log("Number out of range, probably.")
     }
-    saveOrders(allOrders);
 }
 module.exports = {
     addOrder,
