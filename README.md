@@ -1,2 +1,2 @@
 # coffe-order-app
-## command line application with Node.js
+## simple coffe order app with Node.js and Mongodb

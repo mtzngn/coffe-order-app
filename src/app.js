@@ -33,17 +33,21 @@ const main = () => {
 }
 const app = async() => {
     const answers = await inquirer.prompt(topLevelQuestion)
+
     if (answers.options == "type your order") {
         const customerName = await inquirer.prompt(customerQuestion)
         const answer = await inquirer.prompt(addQuestion)
+
         addOrder(customerName.customer, answer.add)
         console.log("Adding a coffe order...")
         app();
     } else if (answers.options == "choose from menu") {
         const customerName = await inquirer.prompt(customerQuestion)
         const answer = await inquirer.prompt(coffeQuestion)
+
         if(answer.options == "espresso" || answer.options == "americano") {
             const addMilk = await inquirer.prompt(milkQuestion)
+            console.log(addMilk.milk)
             addOrder(customerName.customer, answer.options, addMilk.milk)
 
         } else {
@@ -53,8 +57,8 @@ const app = async() => {
         app();
     } 
     else if (answers.options == "list") {
-        listOrders()
         console.log("listing coffer orders...")
+        listOrders()
         app();
     } else if (answers.options == "cancel") {
         const orders = await Order.find({});
