@@ -1,11 +1,12 @@
 const fs = require("fs");
 const chalk = require("chalk");
+require("../src/db/connection");
+const {Order} = require("../src/models/Order")
 
 
-const addOrder = myOrder => {
-    const allOrders = loadOrders();
-    allOrders.push({order: myOrder});
-    saveOrders(allOrders);
+const addOrder = (customername,myOrder) => {
+    const order = new Order({customer: customername, coffee: myOrder, milk: false})
+    order.save()
     
 }
 

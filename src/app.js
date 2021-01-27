@@ -9,7 +9,15 @@ const topLevelQuestion = [
     message: "what would you like to do?",
     choices: ["order", "choose", "list", "cancel", "exit"]}
 ]
-
+const customerQuestion = [
+    {type: "input", name:"customer", message:"Please type your name"}
+]
+const milkQuestion = [
+    { type: "list",
+    name: "options",
+    message: "Would you like to have milk on the side?",
+    choices: ["yes, please.", "no, thanks.",]}
+]
 const addQuestion = [
     {type: "input", name:"add", message:"what would you like to order?"}
 ]
@@ -28,12 +36,17 @@ const main = () => {
 const app = async() => {
     const answers = await inquirer.prompt(topLevelQuestion)
     if (answers.options == "order") {
+        const customerName = await inquirer.prompt(customerQuestion)
         const answer = await inquirer.prompt(addQuestion)
-        addOrder(answer.add)
+        addOrder(customerName.customer,answer.add)
         console.log("Adding a coffe order...")
         app();
     } else if (answers.options == "choose") {
+        const customerName = await inquirer.prompt(customerQuestion)
         const answer = await inquirer.prompt(coffeQuestion)
+        if(answer.options == "espresso" || answer.options == "americano") {
+            const addMilk = await inquirer.prompt(milkQuestion)
+        } else {}
         console.log(`Adding a coffe order... enjoy our ${answer.options}!`)
         addOrder(answer.options)
         app();
