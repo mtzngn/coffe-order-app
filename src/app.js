@@ -26,9 +26,6 @@ const coffeQuestion = [
     {type: "list", name:"options", message: "Which coffe would you like to get?",
     choices: ["latte", "cappucino", "americano", "espresso", "mocha"]}
 ]
-const removeQuestion = [
-    {type: "input", name:"remove", message:"what would you like to remove?"}
-]
 
 const main = () => {
     console.log(chalk.blue(figlet.textSync("Coffe Order App", {font:'big'})));
@@ -59,9 +56,19 @@ const app = async() => {
         listOrders()
         console.log("listing coffer orders...")
         app();
-    } else if (answers.options == "remove") {
+    } else if (answers.options == "cancel") {
+        const orders = await Order.find({});
+        const whatToRemove = orders.map(order =>  order.customer);
+
+        const removeQuestion = [
+            { type: "list",
+            name: "options",
+            message: "which order would you like to delete?",
+            choices: whatToRemove}
+        ]
+        
         const answer = await inquirer.prompt(removeQuestion)
-        removeOrder(answer.remove)
+        removeOrder(answer.options)
         console.log("removeling a coffe order...")
         app();
     } else if (answers.options == "exit") {

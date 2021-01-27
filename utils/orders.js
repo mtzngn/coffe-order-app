@@ -10,17 +10,6 @@ const addOrder = (customername,myOrder) => {
     
 }
 
-const loadOrders = () =>{
-    try {
-        const dataBuffer = fs.readFileSync("src/orders.json");
-        const ordersJson  = dataBuffer.toString();
-        return JSON.parse(ordersJson);
-    } catch (error){
-        return [];
-    }
-};
-
-
 const listOrders = async  () => {
     const orders = await Order.find({});
     orders.map((order) => {
@@ -28,16 +17,9 @@ const listOrders = async  () => {
     })
 };
 
-
-const removeOrder = orderToDelete => {
-    const allOrders = loadOrders();
-
-    try {
-        const removedItem = allOrders.splice(orderToDelete - 1, 1);
-        console.log(`Succesfully removed ${removedItem[0].order}`)
-    } catch (error) {
-        console.log("Number out of range, probably.")
-    }
+const removeOrder = async (orderToDelete) => {
+    await Order.deleteOne({ customer: `${orderToDelete}` });
+    console.log(`\nsuccesfully deleted ${orderToDelete}`)
 }
 module.exports = {
     addOrder,
